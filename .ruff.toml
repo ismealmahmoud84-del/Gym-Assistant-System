@@ -1,0 +1,4 @@
+[tool.ruff]line-length = 88
+exclude = [".venv", "__pycache__", "docs", "data"]
+select = ["E", "F", "W", "C", "I", "Q"]
+per-file-ignores = {"tests/*" = ["F401"]}

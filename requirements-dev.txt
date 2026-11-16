@@ -1,0 +1,7 @@
+black==24.1.0
+ruff==0.15.17
+isort==5.13.0
+pre-commit==4.6.0
+mypy==1.9.0
+types-requests==2.31.0
+types-urllib3==3.4.0

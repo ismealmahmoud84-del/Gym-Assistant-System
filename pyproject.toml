@@ -1,0 +1,19 @@
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 88
+preview = true
+
+[tool.ruff.lint]
+select = ['E', 'F', 'W', 'C', 'I', 'Q']
+extend-ignore = ['E203']
+
+[tool.isort]
+profile = 'black'
+
+[tool.mypy]
+python_version = 3.11
+ignore_missing_imports = true
