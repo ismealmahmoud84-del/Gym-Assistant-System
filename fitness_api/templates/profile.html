@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% load i18n %}
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans 'Profile' %} | GYM.AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e293b 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .container {
+            width: 100%;
+            max-width: 640px;
+            background: rgba(30, 41, 59, 0.86);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .header h1 {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .header p {
+            color: rgb(203, 213, 225);
+        }
+        .form-group {
+            margin-bottom: 22px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgb(203, 213, 225);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background-color: rgba(71, 85, 105, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 14px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: rgb(34, 211, 238);
+            box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.1);
+            background-color: rgba(71, 85, 105, 0.75);
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, rgb(34, 211, 238) 0%, rgb(6, 182, 212) 100%);
+            color: rgb(2, 6, 23);
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 12px;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -8px rgba(34, 211, 238, 0.4);
+        }
+        .notice {
+            padding: 16px 20px;
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            border-radius: 14px;
+            margin-bottom: 24px;
+            color: rgb(167, 243, 208);
+        }
+        .error-message {
+            padding: 12px 16px;
+            background-color: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: rgb(248, 113, 113);
+            border-radius: 12px;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+        .secondary-link {
+            margin-top: 20px;
+            text-align: center;
+            color: rgb(148, 163, 184);
+        }
+        .secondary-link a {
+            color: rgb(34, 211, 238);
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{% trans 'Profile Settings' %}</h1>
+            <p>{% trans 'Update your username, name and email.' %}</p>
+        </div>
+
+        {% for message in messages %}
+            <div class="notice">{{ message }}</div>
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+            <div class="error-message" role="alert">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error-message">{{ field.errors|join:", " }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="submit-btn">{% trans 'Save profile' %}</button>
+        </form>
+
+        <div class="secondary-link">
+            <p>{% trans 'Want to change your password?' %} <a href="{% url 'change_password' %}">{% trans 'Change it here' %}</a></p>
+        </div>
+    </div>
+</body>
+</html>
